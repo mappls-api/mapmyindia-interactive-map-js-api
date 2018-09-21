@@ -1,6 +1,7 @@
 ﻿# MapmyIndia Interactive Map JS API !
 
 Full documentation available here: [https://www.mapmyindia.com/api/advanced-maps/doc/interactive-map-api](https://www.mapmyindia.com/api/advanced-maps/doc/interactive-map-api). 
+
 You can get your api key to be used in this document here: [https://www.mapmyindia.com/api/signup](https://www.mapmyindia.com/api/signup)
 
 ## Introduction
