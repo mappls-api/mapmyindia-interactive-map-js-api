@@ -1,0 +1,267 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+        <title>MapmyIndia Maps API: Polyline Example</title>
+        <link rel="icon" href="http://mapmyindia.com/images/favicon.ico" type="image/x-icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css">
+            html { height: 100%; }
+            body { height: 100%;font-family:Verdana,sans-serif, Arial;color:#000;margin: 0; font-size:14px; padding: 0; }
+            #map{
+                position: absolute;
+                left: 312px; top: 46px; 
+                right: 2px; bottom: 2px; 
+                border: 1px solid #cccccc; }
+            #result {
+                position: absolute;
+                left: 2px; top: 46px;
+                width: 306px;
+                bottom: 2px; 
+                border: 1px solid #cccccc;
+                background-color: #FAFAFA;
+                overflow: auto;
+            }
+            button{
+                width: 220px;font-family:Verdana,sans-serif, Arial;font-size:12px;padding:2px 0;color:#333
+            }
+            .top-div{
+                border-bottom: 1px solid #e9e9e9;padding:10px 12px;background:#fff;
+            }
+            .top-div-span1{
+                font-size: 20px;
+            }
+            .top-div-span2{
+                font-size:16px;color:#777
+            }
+            .btn-div{
+                padding: 16px 12px 6px 38px;
+            }
+            .msg-cont{
+                padding:6px 12px 1px; border-bottom:1px solid #e9e9e9;
+            }
+            .msg-list{
+                line-height: 20px; font-size: 12px; color: #555;
+            }
+            .event-header{
+                padding:14px 12px 6px 38px;color: #666;
+            }
+            #event-log{
+                padding:6px 12px 6px 38px;color: #777; font-size: 12px; line-height: 22px;
+            }
+        </style>
+        <!--put your map api javascript url with key here-->
+        <script src="https://apis.mapmyindia.com/advancedmaps/v1/<js_lic_key>/map_load?v=0.1"></script>
+        <script src="js/Leaflet.Editable.js"></script>  
+    </head>
+    <body>
+        <div class= "top-div">
+            <span class=top-div-span1">MapmyIndia Maps API: </span>
+            <span class=top-div-span2">Map Polyline Example</span>
+        </div>
+        <div id="result">            
+            <div class="btn-div" ><button onclick="mapmyindia_create_polyline()" >Add Polylines</button></div>
+            <div class="btn-div" ><button onclick="mapmyindia_get_bounds()" >Get Bounds of Red Polyline</button></div>
+            <div class="btn-div" ><button onclick="mapmyindia_set_unvisible_polylines()" id="visible" >Hide Polylines</button></div>
+
+            <div class="msg-cont">
+                <ul class="msg-list">
+                    <li>Click on control to create polyline.</li>
+                    <li>Control click on the drawn polyline to remove from map.</li>
+                </ul>
+            </div>
+            <div class="event-header">Event Logs</div>
+            <div id="event-log"></div>
+        </div>
+        <div id="map"></div>
+
+        <script>
+            var map = null;
+            var poly2 = null;
+            var poly = [];
+            var visbility = false;
+            var polyline1, polyline2;
+            var event_div = document.getElementById("event-log"); //log element
+            var visible = document.getElementById("visible"); //show hide polyline button
+
+            window.onload = function () {
+                var center = new L.LatLng(28.549948, 77.268241);
+                map = new MapmyIndia.Map('map', {center: center, editable: true, zoomControl: true, hybrid: true});
+                /***map initialization with tiles of MapmyIndia with MapmyIndia.Map***/
+                /***
+                 1. Create a MapmyIndia Map by simply calling new MapmyIndia.Map() and passing it a html div id, all other parameters are optional...
+                 2. All leaflet mapping functions can be called simply by using "L" object.
+                 3. In future, MapmyIndia may extend the customised/forked Leaflet object to enhance mapping functionality for developers, 
+                 which will be clearly documented in the MapmyIndia API documentation section.
+                 ***/
+
+                /*array of wgs points*/
+                var pts1 = [
+                    new L.LatLng(center.lat - 150 / 10000, center.lng - 150 / 10000),
+                    new L.LatLng(center.lat + 0 / 10000, center.lng - 50 / 10000),
+                    new L.LatLng(center.lat + 50 / 10000, center.lng - 100 / 10000),
+                    new L.LatLng(center.lat + 70 / 10000, center.lng + 50 / 10000),
+                    new L.LatLng(center.lat - 70 / 10000, center.lng + 100 / 10000)
+                ];
+
+                /*array of wgs points*/
+                var pts2 = [
+                    new L.LatLng(center.lat - 150 / 10000, center.lng - 450 / 10000),
+                    new L.LatLng(center.lat + 0 / 10000, center.lng - 350 / 10000),
+                    new L.LatLng(center.lat + 50 / 10000, center.lng - 500 / 10000),
+                    new L.LatLng(center.lat + 70 / 10000, center.lng - 250 / 10000),
+                    new L.LatLng(center.lat - 70 / 10000, center.lng - 200 / 10000),
+                    new L.LatLng(center.lat - 70 / 10000, center.lng + 100 / 10000)
+                ];
+
+                /*parameters of polyline*/
+                var poly1param = {
+                    weight: 4,
+                    opacity: 0.5
+                };
+                var poly1 = new L.Polyline(pts1, poly1param);/*polyline with given points and default color is created*/
+                map.addLayer(poly1);
+
+                var poly2param = {
+                    color: "red",
+                    weight: 4,
+                    opacity: 0.5
+                };
+
+                poly2 = new L.Polyline(pts2, poly2param);/*polyline with given points and red color is created*/
+                map.addLayer(poly2);
+
+                /*** zoom the map to the polyline**/
+                map.fitBounds(poly2.getBounds());
+
+                //extend the L.Control  to Edit control to draw editable polyline
+                L.EditControl = L.Control.extend({
+                    options: {
+                        position: 'topleft',
+                        callback: null,
+                        kind: '',
+                        html: ''
+                    },
+                    onAdd: function (map) {
+                        var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+                                link = L.DomUtil.create('a', '', container);
+
+                        link.href = '#';
+                        link.title = 'Create a new ' + this.options.kind;
+                        link.innerHTML = this.options.html;
+                        L.DomEvent.on(link, 'click', L.DomEvent.stop)
+                                .on(link, 'click', function () {
+                                    window.LAYER = this.options.callback.call(map.editTools);
+                                }, this);
+
+                        return container;
+                    }
+
+                });
+                //at a control polyline to control
+                L.NewLineControl = L.EditControl.extend({
+                    options: {
+                        position: 'topleft',
+                        callback: map.editTools.startPolyline,
+                        kind: 'line',
+                        html: 'Line'
+                    }
+                });
+                // add the control to map
+                map.addControl(new L.NewLineControl());
+
+                var deleteShape = function (e) {
+
+                    if ((e.originalEvent.ctrlKey || e.originalEvent.metaKey) && this.editEnabled()) {
+                        this.editor.deleteShapeAt(e.latlng);
+                    }
+
+                };
+                map.on('layeradd', function (e) {
+                    if (e.layer instanceof L.Path) //delete shape
+                        e.layer.on('click', L.DomEvent.stop).on('click', deleteShape, e.layer);
+                });
+            };
+
+            var mapmyindia_create_polyline = function () {
+                event_div.innerHTML = "";
+                var center = new L.LatLng(28.549948, 77.268241);
+                var pts1 = [
+                    new L.LatLng(center.lat - 500 / 10000, center.lng - 400 / 10000),
+                    new L.LatLng(center.lat + 500 / 10000, center.lng - 400 / 10000),
+                    new L.LatLng(center.lat + 500 / 10000, center.lng - 400 / 10000),
+                    new L.LatLng(center.lat + 500 / 10000, center.lng - 400 / 10000),
+                    new L.LatLng(center.lat - 500 / 10000, center.lng - 400 / 10000),
+                    new L.LatLng(center.lat - 700 / 10000, center.lng + 400 / 10000)
+                ];/*array of wgs points*/
+                var pts2 = [
+                    new L.LatLng(center.lat - 200 / 10000, center.lng - 200 / 10000),
+                    new L.LatLng(center.lat + 0 / 10000, center.lng - 400 / 10000),
+                    new L.LatLng(center.lat + 250 / 10000, center.lng - 125 / 10000),
+                    new L.LatLng(center.lat + 250 / 10000, center.lng - 125 / 10000),
+                    new L.LatLng(center.lat - 250 / 10000, center.lng - 125 / 10000),
+                    new L.LatLng(center.lat - 250 / 10000, center.lng + 125 / 10000)
+                ];/*array of wgs points*/
+
+                var poly1param = {
+                    color: 'blue',
+                    weight: 4,
+                    opacity: 0.5
+                };
+                var poly2param = {
+                    color: 'yellow',
+                    weight: 4,
+                    opacity: 0.5
+                };
+
+                removePolyline();
+
+                polyline1 = new L.Polyline(pts1, poly1param);/*polyline with given points and blue color is created*/
+                map.addLayer(polyline1);/*add polyline to map*/
+
+                polyline2 = new L.Polyline(pts2, poly2param);/*polyline with given points and yellow color is created*/
+                map.addLayer(polyline2);
+
+                map.fitBounds(polyline1.getBounds());
+
+                poly.push(polyline1);
+                poly.push(polyline2);
+                visbility = true;
+                visible.innerHTML = "Hide Polylines";
+            }
+            var mapmyindia_get_bounds = function () {
+                var bounds = poly2.getBounds();
+                event_div.innerHTML = "";
+                event_div.innerHTML = "Current bound: </br> north east lat:" + bounds.getNorthEast().lat
+                        + "</br> north east lng:" + bounds.getNorthEast().lng + "</br>south west lat:"
+                        + bounds.getSouthWest().lat + "</br>south west lng:" + bounds.getSouthWest().lng + "</br>" + event_div.innerHTML;
+            }
+            var mapmyindia_set_unvisible_polylines = function () {
+                var polylength = poly.length;
+                if (polylength > 0) {
+                    visible.innerHTML = visbility ? "Show Polylines" : "Hide Polylines";
+                    /* If false, this polyline is not drawn in DOM. if true polyline is drawn in DOM */
+                    if (visbility) {
+                        for (var i = 0; i < polylength; i++) {
+                            map.removeLayer(poly[i]);
+                        }
+                    } else {
+                        for (var i = 0; i < polylength; i++) {
+                            map.addLayer(poly[i])
+                        }
+                    }
+                } else {
+                    event_div.innerHTML = "";
+                    event_div.innerHTML = "Please add polylines first by clicking \"Add Polylines\" button";
+                }
+                visbility = visbility ? false : true;
+            }
+            var removePolyline = function () {
+                var polylength = poly.length;
+                if (polylength > 0) {
+                    for (var i = 0; i < polylength; i++) {
+                        map.removeLayer(poly[i]);
+                    }
+                    poly = new Array();
+                }
+            }
+        </script>
+    </body>
+</html>

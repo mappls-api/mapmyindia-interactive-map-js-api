@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"lang="en" xml:lang="en">
+    <head>
+        <title>MapmyIndia Maps API: Prune Cluster Demo</title>
+        <link rel="icon" href="http://mapmyindia.com/images/favicon.ico" type="image/x-icon">
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+            <script src="https://apis.mapmyindia.com/advancedmaps/v1/<js_lic_key>/map_load?v=0.1"></script>
+
+            <style type="text/css">
+                html { 
+                    height: 100%; 
+                }
+                body {
+                    height: 100%;
+                    font-family:Verdana,sans-serif, Arial;
+                    color:#000;
+                    margin: 0; 
+                    font-size:14px;
+                    padding: 0; 
+                }
+                #map-container {
+                    position: absolute;
+                    left: 312px; top: 46px; 
+                    right: 2px; bottom: 2px; 
+                    border: 1px solid #cccccc; }
+                #result {
+                    position: absolute; 
+                    left: 2px; top: 46px;
+                    width: 306px;
+                    bottom: 2px; 
+                    border: 1px solid #cccccc;
+                    background-color: #FAFAFA;
+                    overflow: auto;
+                    font-family:Verdana,sans-serif, Arial;
+                }
+                .button{
+                    width: 220px;
+                    font-family:Verdana,sans-serif, Arial;
+                    font-size:12px;
+                    padding:4px 0;
+                    color:#333;
+                    border-radius: 5px 5px 5px 5px;
+                }
+                .btn-div{
+                    padding: 12px 12px 6px 38px;
+                }
+                .top-div{
+                    border-bottom: 1px solid #e9e9e9;padding:10px 12px;background:#fff;
+                }
+                .top-div-span1{
+                    font-size: 20px;
+                }
+                .top-div-span2{
+                    font-size:16px;color:#777
+                }
+            </style>
+            <link rel="stylesheet" href="css/prune.css" />
+            <script src="js/PruneCluster.js"></script>
+    </head>
+    <body>
+        <div class="top-div">
+            <span class="top-div-span1">MapmyIndia Maps API:</span>
+            <span class="top-div-span2">Prune Cluster Example</span>
+        </div>
+        <div id="result">
+            <div class="btn-div"><button onclick="drawCluster()" class="button">Draw Cluster</button></div>
+            <div class="btn-div"><button onclick="createSpiderfyCluster()" class="button">Overlapping Cluster Markers</button></div>
+            <div class="btn-div"><button onclick="clearCluster()" class="button">Clear Cluster</button></div>
+        </div>
+        <div id="map-container"></div>
+        <script>
+            var map = null;
+            var mark = [];
+            var markers = [];
+            var center = new L.LatLng(28.7041, 77.1025);
+            var markerCluster = new PruneClusterForLeaflet(); //Create cluster object.
+            var size = 50000; //set no. of markers in cluster.
+            window.onload = function () {
+                map = new MapmyIndia.Map('map-container', {
+                    zoomControl: true,
+                    hybrid: true,
+                    zoom: 15,
+                    center: center
+                });
+                drawCluster(); //call drawCluster()
+            };
+            function drawCluster() {
+                clearCluster();
+                markerCluster.Cluster.showExactCount = false;  //false will display rounded off marker's count in cluster. true will display exact count. Default true.
+                markerCluster.Cluster.Size = 150; //set the area of cluster. Higher number means more markers merged. Default 120. 
+                for (var i = 0; i < size; i++) {
+                    var marker = new PruneCluster.Marker(center.lat + (Math.random() - 0.5) * Math.random() * 0.00001 * size,
+                            center.lng + (Math.random() - 0.5) * Math.random() * 0.00002 * size); //create prune cluster marker
+                    marker.data.idx = i; //set custom data in marker.data object;
+                    markers.push(marker); //add marker in custom array
+                    markerCluster.RegisterMarker(marker); //Register marker as a member of cluster group.
+                }
+                //set custom marker icon
+                markerCluster.PrepareLeafletMarker = function (marker, data) {
+                    marker.setIcon(L.icon({
+                        iconUrl: "images/location.png",
+                        iconSize: [21, 32]
+                    }));
+                    //tooltip on mouseover
+                    marker.bindTooltip("Marker no. " + data.idx);
+                };
+                map.addLayer(markerCluster);
+                //fit map bound 
+                markerCluster.FitBounds();
+
+                //ProcessView function must be called everytime cluster changes/updates.
+                markerCluster.ProcessView();
+            }
+            //handle overlapping markers
+            function createSpiderfyCluster() {
+                clearCluster();
+                markerCluster.Cluster.showExactCount = true;  //false will display rounded off marker's count in cluster. true will display exact count. Default true.
+                markerCluster.Cluster.Size = 150; //set the area of cluster. Higher number means more markers merged. Default 120. 
+                var request = new XMLHttpRequest();
+                request.open("GET", "data/cluster.json", false);
+                request.send(null)
+                var json = JSON.parse(request.responseText);
+                console.log(json.features[0].properties.num)
+                for (var a = 0; a < json.features.length; a++) {
+                    var x = json.features[a].geometry.coordinates[1];
+                    var y = json.features[a].geometry.coordinates[0];
+                    if (x > 0 && y > 0) {
+                        var marker = new PruneCluster.Marker(y, x, {
+                            popup: "Marker no. " + json.features[a].properties.num.toString() //attach popup with marker
+                        });
+                        markers.push(marker);
+                        markerCluster.RegisterMarker(marker);
+                    }
+                }
+                map.addLayer(markerCluster);
+                markerCluster.FitBounds();
+                markerCluster.ProcessView();
+            }
+            function clearCluster() {
+                if (markers.length > 0) {
+                    markerCluster.RemoveMarkers(markers); //remove all markers from cluster
+                    markerCluster.ProcessView(); //refresh cluster
+                    markers = [];
+                    markerCluster = new PruneClusterForLeaflet();
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>MapmyIndia Maps API: Info Windows Example</title>
+        <link rel="icon" href="http://mapmyindia.com/images/favicon.ico" type="image/x-icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!--put your map api javascript url with key here-->
+        <script src="http://apis.mapmyindia.com/advancedmaps/v1/<js_lic_key>/map_load?v=0.1"></script>
+        <style type="text/css">
+            html {
+                height: 100%; 
+            }
+            body { 
+                height: 100%;font-family:Verdana,sans-serif, Arial;color:#000;margin: 0; font-size:14px; padding: 0;
+            }
+            #map {
+                position: absolute;left: 312px; top: 46px;right: 2px; bottom: 2px;border: 1px solid #cccccc;
+            }
+            #result {
+                position: absolute;left: 2px; top: 46px;width: 306px;bottom: 2px;border: 1px solid #cccccc;background-color: #FAFAFA;overflow: auto;
+            }
+            .info_css{
+                color:#000;text-decoration:none;background-color:#fff;width:270px;padding:5px;font-size: 12px;
+            }
+            div.header{
+                position:relative;background-color:#191919;color:#fff;line-height:20px;font-size:13px;vertical-align:middle;padding:5px 35px 5px 5px;
+            }
+            .header .close{
+                position:absolute;right:5px;top:5px;
+            }
+            button{
+                width: 220px;font-family:Verdana,sans-serif, Arial;font-size:12px;padding:2px 0;color:#333;
+            }
+            .btn-div{
+                padding: 16px 12px 6px 38px;
+            }
+            .top-div{
+                border-bottom: 1px solid #e9e9e9;padding:10px 12px;background:#fff;
+            }
+            .event-header{
+                padding:14px 12px 6px 38px;color: #666;
+            }
+            #event-log{
+                padding:6px 12px 6px 38px;color: #777; font-size: 12px; line-height: 22px;
+            }
+            .msg-cont{
+                padding:6px 12px 1px; border-bottom:1px solid #e9e9e9;
+            }
+            .msg-list{
+                line-height: 20px; font-size: 12px; color: #555;
+            }
+            .info-div{
+                padding:10px;font-size:13px;
+            }
+            custom-info{
+                padding:10px;font-size:13px;
+            }
+        </style>      
+    </head>
+    <body>
+        <div class="top-div">
+            <span style="font-size: 20px">MapmyIndia Maps API: </span> 
+            <span style="font-size:16px;color:#777">Map Info Windows Example</span>
+        </div>
+
+        <div id="result">
+            <div class="btn-div"><button onclick="mapmyindia_show_info_window()">Default Info Window</button></div>
+            <div class="btn-div"><button onclick="mapmyindia_open_fancy_info_window()">A Better Info Window</button></div>
+            <div class="btn-div"><button onclick="mapmyindia_custom_info_window()" >A Custom Info Window</button></div>
+            <div class="btn-div"><button onclick="mapmyindia_hide_info_window()">Hide Info Window</button></div>
+
+            <div class="msg-cont">
+                <ul class="msg-list">
+                    <li>Click on the marker to show an info window.</li>
+                    <li>Click on the map to create a new marker with popup.</li>
+                </ul>
+            </div>
+            <div class="event-header">Event Logs</div>
+            <div id="event-log"></div>
+        </div>
+        <div id="map"></div>
+
+        <script>
+            var map;
+            var info = [];
+            var visbility = false;
+            var mk3, mk4, mk5;
+
+            window.onload = function () {
+                var center = new L.latLng(28.549948, 77.268241);/*WGS location object*/
+                var pt1 = new L.latLng(28.549948, 77.268241);/*WGS location object*/
+                var pt2 = new L.latLng(28.552232, 77.268941);/*WGS location object*/
+                var pt3 = new L.latLng(28.551748, 77.269022);/*WGS location object*/
+                var pt4 = new L.latLng(28.551738, 77.270164);/*WGS location object*/
+                var pt5 = new L.latLng(28.548602, 77.271546);/*WGS location object*/
+                var pt6 = new L.latLng(28.554603, 77.268305);/*WGS location object*/
+                map = new MapmyIndia.Map('map', {center: center, zoomControl: true, hybrid: true, zoom: 17});
+                /*
+                 1. Create a MapmyIndia Map by simply calling new MapmyIndia.Map() and passing it a html div id, all other parameters are optional...
+                 2. All leaflet mapping functions can be called simply by using "L" object.
+                 3. In future, MapmyIndia may extend the customised/forked Leaflet object to enhance mapping functionality for developers, 
+                    which will be clearly documented in the MapmyIndia API documentation section.
+                 */
+
+                /***map-events***/
+                map.on("dblclick", function (e) {
+                    var title = "Sample Text Marker!";
+                    var m = addMarker(e.latlng, '', title);
+                    m.bindPopup(title).openPopup();
+                    var event_div = document.getElementById("event-log");
+                    event_div.innerHTML = "New marker created! <br>" + event_div.innerHTML;
+                });
+
+                /***content for custom info window***/
+                var cont = "<div><h2 style=\"font: bold 16px arial helvetica\">Complex Info Window</h2>" +
+                        "<p style=\"font: italic 14px/20px times\">This content is made of custom styled elements.</p>" +
+                        "<p style=\"font: 12px/14px Verdana\;padding-top: 10px;text-indent: 30px\">" +
+                        "The heading level 2 has custom set style, and so does the previous paragraph.<br>" +
+                        "But guess what, this paragraph also has custom style.</p>" +
+                        "<p style=\"font: 12px/14px Courier;padding-top: 15px;text-indent: 15px;max-width: 200px\"></p>" +
+                        "<p>This paragraph uses default content style, as you can see.</p>" +
+                        "<p><a href=\"http://maps.mapmyindia.com\">MapmyIndia Maps</a></p></div>";
+
+                var mk1 = addMarker(pt1, '', "Marker1").addTo(map);
+                var mk2 = addMarker(pt2, '', "Marker2").addTo(map);
+                mk3 = addMarker(pt3, '', "Marker3").addTo(map);
+                mk4 = addMarker(pt4, '', "Marker4").addTo(map);
+                mk5 = addMarker(pt5, '', "Marker5").addTo(map);
+
+                var position = mk1.getLatLng();
+                /***bind popup with marker***/
+                mk1.bindPopup("<div class='info-div'>Hello world info window.<div>");
+                mk2.bindPopup("<div class='info-div'>Example of info window.<div>");
+                mk3.bindPopup(cont);
+                mk4.bindPopup("<div class='info-div'>This is info window demo.<div>")
+                mapmyindia_fancy_info_window();
+            };
+            function addMarker(position, icon, title) {
+                /*** position must be instance of L.LatLng ***/
+                var event_div = document.getElementById("event-log");
+                if (icon == '') {
+                    /***Marker with a default icon and optional parameter draggable, title***/
+                    var mk = new L.Marker(position, {draggable: true, title: title});
+                } else {
+                    /***Marker with a custom icon and optional parameter draggable, title***/
+                    var mk = new L.Marker(position, {icon: icon, draggable: true, title: title});
+                }
+                /*Add the marker to the map*/
+                map.addLayer(mk);
+                /**Marker events**/
+                mk.on("click", function (e) {
+                    event_div.innerHTML = "Marker clicked <br>" + event_div.innerHTML;
+                });
+                mk.on("dragend", function (e) {
+                    event_div.innerHTML = "Marker dragged <br>" + event_div.innerHTML;
+                });
+                return mk;
+            }
+            function mapmyindia_show_info_window() {
+                /*Bind popup with marker*/
+                mk4.openPopup();
+            }
+            function content() {
+                return "<div style=\"padding:15px;font-size:12px;width:250px;\">This is example of multiple info window with diffrent arrow position!.</div>";
+            }
+            var create_content = function (tittle, content) {
+                var h = new Array();
+                h.push("<div>");
+                h.push("<div class=\"header\">");
+                h.push("<span>");
+                h.push(tittle);
+                h.push("</span> ");
+
+                h.push("</div>");
+                h.push("<div class=\"info_css\">");
+                h.push(content);
+                h.push("</div>");
+                h.push("</div>");
+                return h.join("");
+            };
+            var mapmyindia_fancy_info_window = function () {
+                var content = create_content("A Better Info Window", "An example of a richer info window.");
+                /*bind popup with marker*/
+                mk5.bindPopup(content);
+            };
+            var mapmyindia_open_fancy_info_window = function () {
+                mk5.openPopup();
+            }
+            var mapmyindia_custom_info_window = function () {
+                mk3.openPopup();
+            }
+            var mapmyindia_hide_info_window = function () {
+                map.closePopup();
+            }
+        </script>
+    </body>
+</html>

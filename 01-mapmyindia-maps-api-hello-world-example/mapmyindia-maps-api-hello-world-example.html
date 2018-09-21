@@ -1,0 +1,44 @@
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mapmyindia Maps</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!-- Integrate India's best interactive maps from MapmyIndia into your browser application by simply including MapmyIndia's interactive map API in your script source as shown in next line -->
+                <script src="https://apis.mapmyindia.com/advancedmaps/v1/{your key}/map_load?v1.1"></script>
+                <style>
+                    html, body, #map {	margin: 0;	padding: 0;width: 100%;height: 100%;}
+                    
+                </style>
+	
+	</head>
+	<body>
+            <!-- Define a Div object in the body tag of the HTML where you want the MapmyIndia Map to show up -->
+            <div id="map"></div>
+        <script>
+       /* Initialize a MapmyIndia Map by simply calling new MapmyIndia.Map() and passing it, at the minimum the div object in which you want the map populated. All others parameters are optional.
+        
+        Once you initialize a MapmyIndia Map, you can access all leaflet functionality through the global Leaflet singlet (class/object), "L" and by passing it the "map" variable we initialize the MapmyIndia Map into.
+
+         MapmyIndia interactive map API is based on Leaflet, a popular and powerful open source interactive mapping API
+         The interactive map provides out of the box leaflet controls of search,zoom in/out, map layers(hybrid,road) and current location
+         use flags such as "zoomControl: true" or "search: true" to toggle visibility of the leaflet controls of zoomControl and Search respectively.
+         The below code line initializes the map with all leaflet controls visible. change the respective flags to false to hide them. */
+        
+        var map=new MapmyIndia.Map("map",{ center:[28.61, 77.23], zoomControl: true, hybrid:true, search:true, location:true}); /*map initialized*/
+        
+        //Note: Consider editing the CSS style, to reposition these controls. You can do so by rewriting "..map-control css"
+
+        
+        
+        
+        // for example to add a marker to the map, simply add the line of code below. More documentation on Leaflet and plugins are available at leafletjs.org
+        
+        L.marker([28.61, 77.23]).addTo(map);
+        
+        
+        // MapmyIndia may extend and enhance functionality for interactive mapping in future, which will be clearly documented in the MapmyIndia API documentation section, and which will be available through the MapmyIndia.Map class and MapmyIndia.* set of classes generally....
+         </script>
+	</body>
+</html>
