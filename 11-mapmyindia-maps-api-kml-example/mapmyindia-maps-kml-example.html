@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title>MapmyIndia Maps API: KML Example</title>
+        <meta name="desciption" content="KML Example - MapmyIndia Maps API, kml file upload to display map overlays leaflet ">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <link rel="icon" href="http://mapmyindia.com/images/favicon.ico" type="image/x-icon">
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+        <style type="text/css">
+                /*map css **/
+                body,html { height: 100%;font-family:Verdana,sans-serif, Arial;color:#555;margin: 0;/*EOL*/font-size:12px; padding: 0; background:#fafafa}
+                #map-container {position: absolute;left: 45%; top: 46px;right: 2px; bottom: 2px;border: 1px solid #cccccc; }
+                #menu {position: absolute;left: 2px; top: 46px;width: 45%;bottom: 2px;border: 1px solid #cccccc;background-color: #FAFAFA;overflow-x:hidden;overflow-y: auto;}
+                li{padding:0 5px 10px 0;cursor:pointer;color: #333;}
+                li:hover{color:#00adff;cursor:pointer;}
+                .my-div-span{position:relative;}
+                @media screen and (max-width:320px){
+                    #menu{top:55%;width:99%}
+                    #map-container { top:52px;left:1px;bottom: 45%;}
+                }
+        </style>
+  
+        <!--put your map api javascript url with key here-->
+        <script src="https://apis.mapmyindia.com/advancedmaps/v1/your_map_key_here/map_load?v=0.1"></script>
+        
+      
+    </head>
+    <body>
+        <div id="map-container"></div>
+        <script type="text/javascript">
+            var map_obj=0,kmlLayer=0;
+            init("https://www.mapmyindia.com/api/advanced-maps/doc/sample/mmi.kml");
+            function init(kml)
+            {
+                if(!map_obj) map_obj=new MapmyIndia.Map('map-container',{center:[28.61,77.23],zoomControl: true,hybrid:false,search:false });
+                if(kmlLayer) map_obj.removeLayer(kmlLayer);
+                kmlLayer=new MapmyIndia.kml(map_obj,kml, {fitBounds:true,async: true});
+            }
+            function loadFile()
+            {
+                document.getElementById("text_file").value='Wait..';
+                var fileToLoad = document.getElementById("fileToLoad").files[0];
+                var fileReader = new FileReader();
+                fileReader.onload = function(fileLoadedEvent) 
+                {
+                    var textFromFileLoaded = fileLoadedEvent.target.result;
+                    document.getElementById("text_file").value = textFromFileLoaded;
+                    init(textFromFileLoaded);
+                };
+                fileReader.readAsText(fileToLoad, "UTF-8");
+            }
+            
+        </script>
+        <div style="border-bottom: 1px solid #e9e9e9;padding:10px 12px;background:#fff;"><span style="font-size: 20px">MapmyIndia Maps API:</span> <span style="font-size:16px;color:#777">KML Example</span></div>
+            <div id="menu">
+                <div style="padding: 0 12px 0 17px;line-height:20px"><div style="padding: 5px 0;font-size:13px;color:#222">KML Absolute Path:</div>
+                <input type="text" value="https://www.mapmyindia.com/api/advanced-maps/doc/sample/mmi.kml" style="width: 98%; margin-right: 10px;padding:5px;border:1px solid #ddd;color:#555" id="search"/>
+                <center><button onclick="init(document.getElementById('search').value)" style="margin-top:10px;">View on Map</button></center>
+                <br><div class="searchbox-title"><input type="file" id="fileToLoad" onchange="loadFile()" accept=".kml" style="width:50px;margin-right: 40px"> &nbsp;Select File or Paste KML here:</div>
+                <textArea style="width: 98%; margin-right: 10px;border:1px solid #ddd;color:#555;height:200px" id="text_file"></textArea>     
+	 <br/>
+         <center><button onclick="init(document.getElementById('text_file').value)" style="margin-top:10px;">View on Map</button></center>
+                    </div>
+                
+                    <!--div to show the best result matching the search-->
+                    <br><hr><div class="doc1" >Source Code</div>
+                    
+<div style="border-top: 1px solid #e9e9e9;padding:2px;color:#117301;overflow-x: scroll;" id="result">                    
+<xmp> 
+<html>
+    <head>
+    </head>
+    <body>
+    <div id="map" style="position:absolute;width:100%;height:99%"></div>
+    <script type="text/javascript">
+    var map=new MapmyIndia.Map('map',{center:[28.61,77.23],zoomControl: true});
+    var kmlLayer=new MapmyIndia.kml(map,"https://www.mapmyindia.com/api/advanced-maps/doc/sample/mmi.kml", {fitBounds:true,async: true}); 
+    </script>
+    </body>
+</html>
+</xmp>
+                        
+                        
+                     
+                   </div>
+                    <!--div to show the other result-->
+                    <div style="border-top: 1px solid #e9e9e9;padding:10px; margin-top: 12px" id="otherresult"></div>
+            </div>
+                <!--div to show the map-->
+                
+            </body>
+</html>
+

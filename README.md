@@ -180,6 +180,25 @@ In the previous section, we looked at a basic cluster implementation. The advant
 
 In the previous section, we looked at clusters and their implementations. There will be cases where in you would want to get more of your polylines. For such a case scenario, we provide Decorated Polyline.
 
+### KML Overlay
+
+**KML**: [Keyhole Markup Language](https://www.opengeospatial.org/standards/kml) is a file format used to display geographic data on maps.
+Using this plugin, you can overlay KML data over MapmyIndia Maps for web.
+
+#### Important Notes to remember
+1. Only KML data supported.
+2. KML file **must** have absolute path or raw KML string 
+(in variable or in textbox)
+3. All internal URL's path **must** be absolute. 
+(for icon path etc)
+4. File must not be password protected.
+5. File must be CORS enabled.
+6. File must follow KML standard strictly.
+
+#### Live Demo
+Visit the URL below for visiting the live demo: 
+[LIVE DEMO](https://www.mapmyindia.com/api/advanced-maps/doc/sample/mapmyindia-maps-kml-example)
+
 **Please Note**: For a more detailed code snippet follow the links provided above to see the sample code or see a live demo.
 
 For any queries and support, please contact: 
