@@ -182,6 +182,8 @@ In the previous section, we looked at clusters and their implementations. There 
 
 ### KML Overlay
 
+[JSFIDDLE](https://jsfiddle.net/mapmyindia_map/6k7uzm2v/19/)  |  [LIVE DEMO](https://www.mapmyindia.com/api/advanced-maps/doc/sample/mapmyindia-maps-kml-example)
+
 **KML**: [Keyhole Markup Language](https://www.opengeospatial.org/standards/kml) is a file format used to display geographic data on maps.
 Using this plugin, you can overlay KML data over MapmyIndia Maps for web.
 
@@ -195,16 +197,12 @@ Using this plugin, you can overlay KML data over MapmyIndia Maps for web.
 5. File must be CORS enabled.
 6. File must follow KML standard strictly.
 
-#### Live Demo
-Visit the URL below for visiting the live demo: 
-[LIVE DEMO](https://www.mapmyindia.com/api/advanced-maps/doc/sample/mapmyindia-maps-kml-example)
-
 **Please Note**: For a more detailed code snippet follow the links provided above to see the sample code or see a live demo.
 
 For any queries and support, please contact: 
 
 ![Email](https://www.google.com/a/cpanel/mapmyindia.co.in/images/logo.gif?service=google_gsuite) 
-Email us at [apisupport@mapmyindia.co.in](mailto:apisupport@mapmyindia.co.in)
+Email us at [apisupport@mapmyindia.com](mailto:apisupport@mapmyindia.com)
 
 ![](https://www.mapmyindia.com/api/img/icons/stack-overflow.png)
 [Stack Overflow](https://stackoverflow.com/questions/tagged/mapmyindia-api)
@@ -219,5 +217,5 @@ Need support? contact us!
 Read about the latest updates & customer stories
 
 
-> © Copyright 2018. CE Info Systems Pvt. Ltd. All Rights Reserved. | [Terms & Conditions](http://www.mapmyindia.com/api/terms-&-conditions)
+> © Copyright 2019. CE Info Systems Pvt. Ltd. All Rights Reserved. | [Terms & Conditions](http://www.mapmyindia.com/api/terms-&-conditions)
 >  Written with [StackEdit](https://stackedit.io/) by MapmyIndia.
