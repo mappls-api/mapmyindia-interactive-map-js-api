@@ -30,10 +30,10 @@
     
 
         <!--put your map api javascript url with key here-->
-       <script src="https://apis.mapmyindia.com/advancedmaps/v1/<js_lic_key>/map_load?v=1.2"></script>
+       <script src="https://apis.mapmyindia.com/advancedmaps/v1/<js_map_key>/map_load?v=1.3&plugin=cluster"></script>
         <link rel="stylesheet" href="css/MarkerCluster.css" />
         <link rel="stylesheet" href="css/MarkerCluster.Default.css" />       
-        <script src="js/leaflet.markercluster-src.js"></script>
+        <!---<script src="js/leaflet.markercluster-src.js"></script>--->
         <script>
             var map = null;
             var latitudeArr = [28.549948, 28.552232, 28.551748, 28.551738, 28.548602, 28.554603, 28.545639, 28.544339, 28.553196, 28.545842];

@@ -25,7 +25,7 @@
         </style>
         <link rel="stylesheet" href="css/leaflet.css" />
         <!--put your map api javascript url with key here-->
-        <script src="https://apis.mapmyindia.com/advancedmaps/v1/<js_lic_key>/map_load?v=1.2"></script>
+        <script src="https://apis.mapmyindia.com/advancedmaps/v1/<js_map_key>/map_load?v=1.3"></script>
         <script>
             var map = null;
             window.onload = function() {
@@ -111,23 +111,30 @@
                 event_div.innerHTML= "Map pan to:</br> lat:" + pt.lat + "</br>lng:" + pt.lng + "</br>"+event_div.innerHTML; 
             }
             function mapmyindia_zoom_in() {
-                map.zoomIn();/*Zooms in one zoom step, unless current zoom level is the minimal zoom level. */
-
-                var zoom=map.getZoom();/*zoom must be number that is set as new zoom level between 1 and 16*/
+                if(map.getZoom()<19)
+				{
+				map.zoomIn();/*Zooms in one zoom step, unless current zoom level is the minimal zoom level. */
+                var zoom=map.getZoom();/*zoom must be number that is set as new zoom level between 4 and 19*/
+				zoom = zoom + 1;
                 var event_div = document.getElementById("event-log");
                 event_div.innerHTML='';
                 event_div.innerHTML= "Zoom level set to: "+ zoom +event_div.innerHTML; 
+				}
             }
             function mapmyindia_zoom_out() {
-                map.zoomOut();/*Zooms out one zoom step, unless current zoom level is the maximal zoom level. */
-                var zoom=map.getZoom();/*zoom must be number that is set as new zoom level between 1 and 16*/
+                if(map.getZoom()>4)
+				{
+				map.zoomOut();/*Zooms out one zoom step, unless current zoom level is the maximal zoom level. */
+                var zoom=map.getZoom();/*zoom must be number that is set as new zoom level between 4 and 19*/
+				zoom = zoom - 1;
                 var event_div = document.getElementById("event-log");
                 event_div.innerHTML='';
                 event_div.innerHTML= "Zoom level set to: "+ zoom +event_div.innerHTML; 
+				}
             }
             function mapmyindia_set_zoom() {
                 var zoom=12;
-                map.setZoom(zoom);/*zoom must be number that is set as new zoom level between 1 and 16*/
+                map.setZoom(zoom);/*zoom must be number that is set as new zoom level between 4 and 19*/
                 var event_div = document.getElementById("event-log");
                 event_div.innerHTML='';
                 event_div.innerHTML= "Zoom level set to: "+ zoom +event_div.innerHTML; 

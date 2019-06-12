@@ -6,7 +6,7 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
         <link rel="icon" href="http://mapmyindia.com/images/favicon.ico" type="image/x-icon">
                 <!--put your map api javascript url with key here-->
-        <script src="https://apis.mapmyindia.com/advancedmaps/v1/<js_lic_key>/map_load?v=1.2"></script>
+        <script src="https://apis.mapmyindia.com/advancedmaps/v1/<js_map_key>/map_load?v=1.3"></script>
         <style type="text/css">
             /*map css **/
             body,html { height: 100%;font-family:Verdana,sans-serif, Arial;color:#555;margin: 0; font-size:12px; padding: 0; background:#fafafa}
@@ -28,7 +28,7 @@
                     if (checkValidLatlong(parseFloat(lat), parseFloat(lon))) {
                         var centre = new L.LatLng(lat, lon);
                         map = new MapmyIndia.Map('map', {center: centre, zoomControl: true, hybrid: true});
-                        /*1.create a MapmyIndia Map by simply calling new MapmyIndia.Map() and passsing it at the minimum div object, all others are optional...
+                        /*1.create a MapmyIndia Map by simply calling new MapmyIndia.Map() and passing it at the minimum div object, all others are optional...
                          2.all leaflet mapping functions can be called simply on the L object
                          3.MapmyIndia may extend and in future modify the customised/forked Leaflet object to enhance mapping functionality for developers, which will be clearly documented in the MapmyIndia API documentation section.*/
                         var icon = L.icon({iconUrl: 'images/Marker.png', iconRetinaUrl: 'images/Marker.png', iconSize: [30, 30]});
