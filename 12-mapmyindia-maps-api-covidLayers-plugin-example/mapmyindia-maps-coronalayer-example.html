@@ -1,0 +1,112 @@
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title>MapmyIndia Maps API: Corona Layer Control</title>
+        <meta name="desciption" content="Corona Layer Control - MapmyIndia Maps API, kml file upssload to display map overlays leaflet ">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <link rel="icon" href="https://www.mapmyindia.com/images/favicon.ico" type="image/x-icon">
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+        <style type="text/css">
+                /*map css **/
+                body,html { height: 100%;font-family:Verdana,sans-serif, Arial;color:#555;margin: 0;/*EOL*/font-size:12px; padding: 0; background:#fafafa}
+                #map-container {position: absolute;left: 404px; top: 46px;right: 2px; bottom: 2px;border: 4px solid #cccccc; }
+                #menu {position: absolute;left: 2px; top: 46px;width: 400px;bottom: 2px;border: 1px solid #cccccc;background-color: #FAFAFA;overflow-x:hidden;overflow-y: auto;}
+                li{padding:0 5px 10px 0;cursor:pointer;color: #333;}
+                li:hover{color:#00adff;cursor:pointer;}
+                .my-div-span{position:relative;}
+                .title{font-size:10px;color:#27a3ea;line-height: 10px}
+                @media screen and (max-width:700px){
+                    #menu{top:55%;width:99%}
+                    #map-container { top:52px;left:1px;bottom: 45%;}
+                }
+        </style>
+  
+        <!--put your map api javascript url with key here-->
+               <script src="https://apis.mapmyindia.com/advancedmaps/v1/map_js_key/map_load?v=1.5&plugins=coronaLayers&callback=init"></script>
+        
+      
+    </head>
+    <body>
+        <div id="map-container"></div>
+        <script type="text/javascript">
+            var map;
+            function init(kml)
+            {
+               if(map) map.remove();
+               map=new MapmyIndia.Map('map-container',{center:[28.61,77.23],zoom:8,zoomControl: true,hybrid:false,search:false });
+              
+                var pos=document.getElementById('position').value;
+                var position='bottomleft'; if(pos) position=pos;
+                var multi=document.getElementById('multiple').value;
+                var multiple=false; if(multi) multiple=multi;
+                var inf=document.getElementById('info').value;
+                var info=true; if(inf) info=inf;
+                var exp=document.getElementById('expand').value;
+                var expand=false; if(exp) expand=exp;
+                 var scon=document.getElementById('control').value;
+                var control=true; if(scon) control=scon;
+
+               new MapmyIndia.covidLayer({map:map,position:pos,showControl:control,infocallback1:infocall,defaultLayer:'containment_zone_gradient',expand:expand,multiple:multiple,info:info});
+
+               function infocall(data)
+               {
+                   console.log(data);
+               }
+
+     }
+         
+        </script>
+        <div style="border-bottom: 1px solid #e9e9e9;padding:10px 12px;background:#fff;"><span style="font-size: 20px">MapmyIndia Maps API:</span> <span style="font-size:16px;color:#777">Corona Control</span></div>
+            <div id="menu">
+                <div style="padding: 0 12px 0 17px;line-height:20px"><div style="padding: 5px 0;font-size:13px;color:#222">Method: <br> <b><center>MapmyIndia.covidLayer({'map':mapobj});</center></b></div>
+                    <div style="padding: 0 12px 0 17px;line-height:20px"><div style="padding: 5px 0;font-size:13px;color:#222"><hr>Optional Parameters:</div>
+                        <div style="padding: 0 12px 0 17px;line-height:20px">
+                            <div style="padding: 5px 0;font-size:13px;color:#222">1) position <select id="position" onchange="init()"><option value="">Select</option><option value="topleft">topleft</option><option value="topright">topright</option><option value="bottomleft">bottomleft</option><option value="bottomright">bottomright</option></select><br>
+                                        <span class='title'>/*position of control map default bottomleft*/</span>
+                                    
+                            </div>
+                             <div style="padding: 5px 0;font-size:13px;color:#222">2) defaultLayer<br>
+                                        <div class='title'>/*load default layer on initialization, get all layers by calling new MapmyIndia.covidLayer(), ie. defaultLayer:"corona_isolation_ward"*/</div>
+                                    
+                            </div>
+                            <div style="padding: 5px 0;font-size:13px;color:#222">3) multiple <select id="multiple" onchange="init()"><option value="false">false</option><option value="true">true</option></select><br>
+                                        <span class='title'>/*position of control map default bottomleft*/</span>
+                                    
+                            </div>
+                            <div style="padding: 5px 0;font-size:13px;color:#222">4) info <select id="info" onchange="init()"><option value="true">true</option><option value="false">false</option></select><br>
+                                        <span class='title'>/*to show info in popup on click true/false default true)*/</span>
+                                    
+                            </div>
+                             <div style="padding: 5px 0;font-size:13px;color:#222">5) infocallback <br>
+                                        <span class='title'>/*set a callback method it can after click on corona layer*/</span>
+                                    
+                            </div>
+                            <div style="padding: 5px 0;font-size:13px;color:#222">6) expand <select id="expand" onchange="init()"><option value="false">false</option><option value="true">true</option></select><br>
+                                        <span class='title'>/*expand layer control UI true/false default false)*/</span>
+                                    
+                            </div>
+                            <div style="padding: 5px 0;font-size:13px;color:#222">7) showControl <select id="control" onchange="init()"><option value="true">true</option><option value="false">false</option></select><br>
+                                        <span class='title'>/*to show or not show controls UI on map default true, its for directly loading defaultLayer only*/</span>
+                                    
+                            </div>
+                            <div style="padding: 5px 0;font-size:13px;color:#222">8) skiplayerIds <br>
+                                        <div class='title'>/*to skip any layer from control ie. skiplayerIds:['state_corona_stats','containment_zone_gradient']*/</div>
+                                    
+                            </div>
+                             
+                </div>
+                
+          
+                    <!--div to show the other result-->
+                    <div style="border-top: 1px solid #e9e9e9;padding:10px; margin-top: 12px" id="otherresult"></div>
+            </div>
+                <!--div to show the map-->
+                
+            </body>
+</html>
+
+
+
