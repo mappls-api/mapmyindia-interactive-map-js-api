@@ -106,11 +106,11 @@ MapmyIndia.covidRemove();
 ### Sample Screenshots
 
 #### Containment Zones
-![](https://www.mapmyindia.com/api/img/icons/stack-overflow.png)
+![](https://mmi-api-team.s3.ap-south-1.amazonaws.com/API-Team/covidImages/containmentZone.png)
 
 
 #### Testing Labs
-![](https://www.mapmyindia.com/api/img/icons/stack-overflow.png)
+![](https://mmi-api-team.s3.ap-south-1.amazonaws.com/API-Team/covidImages/testingLabs.png)
 
 That's All Folks !
 
