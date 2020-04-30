@@ -30,7 +30,7 @@
     
 
         <!--put your map api javascript url with key here-->
-       <script src="https://apis.mapmyindia.com/advancedmaps/v1/<js_map_key>/map_load?v=1.3&plugin=cluster"></script>
+       <script src="https://apis.mapmyindia.com/advancedmaps/v1/<js_map_key>/map_load?v=1.5&plugin=cluster"></script>
         <link rel="stylesheet" href="css/MarkerCluster.css" />
         <link rel="stylesheet" href="css/MarkerCluster.Default.css" />       
         <!---<script src="js/leaflet.markercluster-src.js"></script>--->

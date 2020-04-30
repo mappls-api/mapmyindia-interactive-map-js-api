@@ -6,7 +6,7 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
         <link rel="icon" href="http://mapmyindia.com/images/favicon.ico" type="image/x-icon">
                 <!--put your map api javascript url with key here-->
-        <script src="https://apis.mapmyindia.com/advancedmaps/v1/<js_map_key>/map_load?v=1.3"></script>
+        <script src="https://apis.mapmyindia.com/advancedmaps/v1/<js_map_key>/map_load?v=1.5"></script>
         <style type="text/css">
             /*map css **/
             body,html { height: 100%;font-family:Verdana,sans-serif, Arial;color:#555;margin: 0; font-size:12px; padding: 0; background:#fafafa}

@@ -87,6 +87,20 @@ its for directly loading defaultLayer only
 8. `skiplayerIds` to skip any laer form control
  ie. `skiplayerIds:['state_corona_stats','containment_zone_gradient']`
 
+    List of Layer IDs: 
+    - id: `state_corona_stats`
+    - id: `containment_zone_gradient`
+    - id: `corona_treatment_centre`
+    - id: `corona_testing_centre`
+    - id: `corona_sample_collection_centre`
+    - id: `corona_isolation_ward`
+    - id: `districts_containment_zone`
+    - id: `government_ration_distribution`
+    - id: `hunger_and_night_shelter`
+    - id: `hunger_relief_centre`
+
+<br>
+
 #### Getting the list of Covid-19 layers
 
 ##### Method
