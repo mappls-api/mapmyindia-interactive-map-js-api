@@ -1,0 +1,111 @@
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title>MapmyIndia Maps API: Safety Check</title>
+        <meta name="desciption" content="Corona Layer Control - MapmyIndia Maps API, kml file upssload to display map overlays leaflet ">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <link rel="icon" href="https://www.mapmyindia.com/images/favicon.ico" type="image/x-icon">
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+        <style type="text/css">
+                /*map css **/
+                body,html { height: 100%;font-family:Arial;color:#555;margin: 0;/*EOL*/font-size:12px; padding: 0; background:#fafafa}
+                #map-container {position: absolute;left:400px; top: 46px;right: 2px; bottom: 2px;border: 4px solid #cccccc; }
+                #menu {position: absolute;left: 0px; top: 46px;width: 400px;bottom: 2px;border: 1px solid #cccccc;background-color: #FAFAFA;overflow-x:hidden;overflow-y: auto;}
+                li{padding:0 5px 10px 0;cursor:pointer;color: #333;}
+                li:hover{color:#00adff;cursor:pointer;}
+                .my-div-span{position:relative;}
+                .title{font-size:10px;color:#27a3ea;line-height: 10px}
+                @media screen and (max-width:700px){
+                    #menu{top:55%;width:99%}
+                    #map-container { top:52px;left:1px;bottom: 45%;}
+                    #call_safety_map_dv{
+                        bottom: 350px !important;
+                    }
+                }
+        </style>
+  
+        <!--put your map api javascript url with key here-->
+               <script src="https://apis.mapmyindia.com/advancedmaps/v1/<Your_Key>/map_load?v=1.5&plugins=coronaLayers&callback=init"></script>
+        
+      
+    </head>
+    <body>
+        <div id="map-container"></div>
+        <script type="text/javascript">
+            var map;
+            function init(kml)
+            {
+               if(map) map.remove();
+               map=new MapmyIndia.Map('map-container',{center:[28.61,77.23],zoom:8,zoomControl: true,hybrid:false,search:false });
+                /*
+         How to Add Safety Widget
+        
+         Method: new MapmyIndia.showSafetyCheck();
+        
+         Optional params:
+        
+         1) parentDivId: //Clients custom div Id in which widget will be loading
+         2) details:// show details on safety check page, default range is medium 
+         3) geolocation: //to show users geolocation option in widget
+         4) shareOptions: //to show users social share options in widget
+        
+         Example:
+                 new MapmyIndia.showSafetyCheck({parentDivId:"mS_Id"details:"high"});
+         */
+         
+         
+       
+     }
+        function call_safety_div()
+        {
+            var details=document.getElementById("details").value;
+            var geo=document.getElementById("geolocation").value;
+            var share=document.getElementById("shareOptions").value;
+            new MapmyIndia.showSafetyCheck({parentDivId:"safety_div",geolocation:geo,shareOptions:share,details:details});
+        }   
+        </script>
+        <div onclick="call_safety_div()" id="call_safety_map_dv" style="position: fixed;bottom: 100px;right: 15px;z-index: 9999;cursor:pointer;border: 2px solid red;padding: 5px;border-radius: 50%;"><img src="https://maps.mapmyindia.com/covid19/corona/ic_safety_check.png" style="width:30px"></div>
+        <div style="background: rgba(0,0,0,.75); position: fixed;width: 100%;height: 100%;top: 0;left: 0;margin: auto;z-index:9999;display: none" id="safety_div"></div>
+        <div style="border-bottom: 1px solid #e9e9e9;padding:10px 12px;background:#fff;"><span style="font-size: 20px">MapmyIndia Maps API:</span> <span style="font-size:16px;color:#777">Safety Check</span></div>
+        <div id="menu">
+                <div style="padding: 0 12px 0 17px;line-height:20px"><div style="padding: 5px 0;font-size:13px;color:#222">Method: <br> <b><center>new MapmyIndia.showSafetyCheck();</center></b></div>
+                    <div style="padding: 0 12px 0 17px;line-height:20px"><div style="padding: 5px 0;font-size:13px;color:#222"><hr>Optional Parameters:</div>
+                        <div style="padding: 0 12px 0 17px;line-height:20px">
+                            <div style="padding: 5px 0;font-size:13px;color:#222">1) parentDivId:
+                                        <span class='title'>/*Your defined div id in widget*/</span>
+                                    
+                            </div>
+                             <div style="padding: 5px 0;font-size:13px;color:#222">2) details: <select id="details" onchange="call_safety_div()"><option value="low">low</option><option value="medium" selected="">medium</option><option value="high">high</option></select>
+                                 <br><span class='title'>/*to show details on safety check page, default range is medium */</span>
+                                    
+                            </div>
+                            <div style="padding: 5px 0;font-size:13px;color:#222">2) geolocation: <select id="geolocation" onchange="call_safety_div()"><option value="true">true</option><option value="false" >false</option></select>
+                                 <br><span class='title'>/*to show users geolocation option in widget*/</span>
+                                    
+                            </div>
+                            
+                            <div style="padding: 5px 0;font-size:13px;color:#222">2) shareOptions: <select id="shareOptions" onchange="call_safety_div()"><option value="true">true</option><option value="false" >false</option></select>
+                                 <br><span class='title'>/*to show users social share options in widget*/</span>
+                                    
+                            </div>
+                             
+                </div>
+                
+          
+                    <!--div to show the other result-->
+                    <div style="border-top: 1px solid #e9e9e9;padding:10px 1px; margin-top: 12px;font-size:10px;" id="otherresult">Example:<br>new MapmyIndia.showSafetyCheck({parentDivId:"mS_Id"details:"high"});</div>
+            </div>
+                    
+                    <center><input type="button" value="Show Safety Check Widget" onclick="call_safety_div()"style="padding:10px"></center>
+                </div>
+        </div>
+                <!--div to show the map-->
+                
+            </body>
+</html>
+
+
+
