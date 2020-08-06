@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MapmyIndia - Tiles</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" ></script>
+<script src="https://apis.mapmyindia.com/advancedmaps/v1/<your-map-key>/map_load?v=1.5&vectorLayer"></script>
+</head>
+<body>
+<div id="mapid" style="width: 100%; height: 98vh;"></div>
+<script>
+      var mymap = L.map('mapid').setView([28.505, 77.09], 13);
+       //ADD MAPMYINDIA TILES LAYER
+       var mmTile= new MapmyIndia.tiles().addTo(mymap);       
+       /*Map.removeLayer(mmiTile);*/
+</script>
+</body>
+</html>
