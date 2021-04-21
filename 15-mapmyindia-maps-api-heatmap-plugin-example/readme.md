@@ -1,4 +1,4 @@
-![MapmyIndia APIs](https://www.mapmyindia.com/api/img/mapmyindia-api.png)
+[<img src="https://www.mapmyindia.com/api/img/mapmyindia-api.png" height="40"/> </p>](https://www.mapmyindia.com/api)
 
 # MapmyIndia Heat Map Plugin for Interactive Map JS SDK
 
@@ -50,15 +50,18 @@ var heat = L.heatLayer(data, { minOpacity:.5,radius:25,gradient:{0.2:'red',0.5:'
 ```
 
 #### Mandatory Parameters
-1. data: Data based on which the heat map is generated.
+1. `data`: Data based on which the heat map is generated. Consists of an array of coordinate pairs (lat,long) as well as their color intensity values rannging from 0 to 1. Each point in the input array can be either an array like [50.5, 30.5, 0.5], or a Leaflet-compatible LatLng object.<br> Example: 
+    ```js
+    var data=[[28.61477333,77.2425878,0.2],[28.612735,77.248696,0.5]];
+    ```
 2. options:
-      - minOpacity - the minimum opacity the heat will start at
-      - maxZoom - zoom level where the points reach maximum intensity (as intensity scales with zoom), equals maxZoom of the map by default
-      - max - maximum point intensity, 1.0 by default
-      - radius - radius of each "point" of the heatmap, 25 by default
-      - blur - amount of blur, 15 by default
-      - gradient - color gradient config, e.g. {0.4: 'blue', 0.65: 'lime', 1: 'red'}
-Each point in the input array can be either an array like [50.5, 30.5, 0.5], or a Leaflet LatLng object.
+      - `minOpacity` - the minimum opacity the heat will start at
+      - `maxZoom` - zoom level where the points reach maximum intensity (as intensity scales with zoom), equals maxZoom of the map by default.
+      - `max` - maximum point intensity, 1.0 by default
+      - `radius` - radius of each "point" of the heatmap, 25 by default
+      - `blur` - amount of blur, 15 by default
+      - `gradient` - color gradient config, e.g. {0.4: 'blue', 0.65: 'lime', 1: 'red'}
+
 
 ### Removing the heat map
 
@@ -140,7 +143,7 @@ Need support? contact us!
 
 
 
-<div align="center">@ Copyright 2020 CE Info Systems Pvt. Ltd. All Rights Reserved.</div>
+<div align="center">@ Copyright 2021 CE Info Systems Pvt. Ltd. All Rights Reserved.</div>
 
 <div align="center"> <a href="https://www.mapmyindia.com/api/terms-&-conditions">Terms & Conditions</a> | <a href="https://www.mapmyindia.com/about/privacy-policy">Privacy Policy</a> | <a href="https://www.mapmyindia.com/pdf/mapmyIndia-sustainability-policy-healt-labour-rules-supplir-sustainability.pdf">Supplier Sustainability Policy</a> | <a href="https://www.mapmyindia.com/pdf/Health-Safety-Management.pdf">Health & Safety Policy</a> | <a href="https://www.mapmyindia.com/pdf/Environment-Sustainability-Policy-CSR-Report.pdf">Environmental Policy & CSR Report</a>
 
