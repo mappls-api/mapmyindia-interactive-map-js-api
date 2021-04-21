@@ -50,7 +50,7 @@ var heat = L.heatLayer(data, { minOpacity:.5,radius:25,gradient:{0.2:'red',0.5:'
 ```
 
 #### Mandatory Parameters
-1. `data`: Data based on which the heat map is generated. Consists of an array of coordinate pairs (lat,long) as well as their color intensity values rannging from 0 to 1. Each point in the input array can be either an array like [50.5, 30.5, 0.5], or a Leaflet-compatible LatLng object.<br> Example: 
+1. `data`: Data based on which the heat map is generated. Consists of an array of coordinate pairs (lat,long) as well as their color intensity values ranging from 0 to 1. Each point in the input array can be either an array like [50.5, 30.5, 0.5], or a Leaflet-compatible LatLng object.<br> Example: 
     ```js
     var data=[[28.61477333,77.2425878,0.2],[28.612735,77.248696,0.5]];
     ```
