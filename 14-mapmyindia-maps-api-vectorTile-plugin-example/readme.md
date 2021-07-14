@@ -5,7 +5,7 @@
 **Easy To Integrate Maps & Location APIs & SDKs For Web & Mobile Applications**
 
 Powered with India's most comprehensive and robust mapping functionalities.
-**Now Available**  for Srilanka, Nepal, Bhutan, Bangladesh and Myanmar.
+Explore through [238 nations](https://github.com/MapmyIndia/mapmyindia-rest-api/blob/master/docs/countryISO.md) with Global Search, Routing and Mapping APIs & SDKs by MapmyIndia.
 
 1. Copy and paste the JavaScript API key from your dashboard (http://www.mapmyindia.com/api/dashboard) in the sample code for interactive map development. 
 
